@@ -1,7 +1,14 @@
 package com.lggyx.service;
 
+import com.lggyx.dto.ItemDTO;
 import com.lggyx.entity.ItemInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lggyx.result.Result;
+import com.lggyx.vo.ItemInfoVO;
+import com.lggyx.vo.ItemVO;
+import com.lggyx.vo.ListItemVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +20,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IItemInfoService extends IService<ItemInfo> {
 
+    Result<ItemVO> addItem(ItemDTO itemDTO);
+
+    Result<List<ListItemVO>> getItemList();
+
+    Result<ItemInfoVO> getItemInfo(Long id);
 }

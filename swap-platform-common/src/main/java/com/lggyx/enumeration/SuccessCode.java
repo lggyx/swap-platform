@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 public enum SuccessCode {
     SUCCESS(200, "操作成功"),
-    SUCCESS_NO_DATA(201, "成功，无数据");
+    SUCCESS_NO_DATA(201, "成功，无数据"),
+    ADD_SUCCESS(200, "发布成功");
 
     private final int code;
     private final String msg;
