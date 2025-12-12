@@ -34,4 +34,15 @@ public class ItemController {
     public Result<ItemInfoVO> getItem(@PathVariable Long id) {
         return itemInfoService.getItemInfo(id);
     }
+
+    @PutMapping("/items/{id}")
+    @Operation(summary = "更新旧物信息（卖家）")
+    public Result<ItemVO> updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDTO) {
+        return itemInfoService.updateItem(id, itemDTO);
+    }
+    @DeleteMapping("/items/{id}")
+    @Operation(summary = "删除旧物信息（卖家）")
+    public Result<String> deleteItem(@PathVariable Long id) {
+        return itemInfoService.deleteItem(id);
+    }
 }

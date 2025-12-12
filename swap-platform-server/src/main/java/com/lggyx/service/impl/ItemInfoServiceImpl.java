@@ -75,4 +75,34 @@ public class ItemInfoServiceImpl extends ServiceImpl<ItemInfoMapper, ItemInfo> i
         BeanUtils.copyProperties(itemInfo, itemInfoVO);
         return Result.success(itemInfoVO);
     }
+
+    @Override
+    public Result<ItemVO> updateItem(Long id, ItemDTO itemDTO) {
+        RoleCode roleCode = RoleCode.fromAccount(BaseContext.getCurrentAccount());
+        if (roleCode != RoleCode.SELLER_ROLE_CODE) {
+            return Result.error("权限不足");
+        }
+        ItemInfo itemInfo = itemInfoMapper.selectById(id);
+        if (itemInfo == null) {
+            return Result.error("无效的ID");
+        }
+        itemInfo.setItemName(itemDTO.getItemName());
+        itemInfo.setItemCategory(itemDTO.getItemCategory());
+        itemInfo.setItemImage(itemDTO.getItemImage());
+        itemInfo.setExchangeRequest(itemDTO.getExchangeRequest());
+        itemInfo.setItemDetail(itemDTO.getItemDetail());
+        int result = itemInfoMapper.updateById(itemInfo);
+        ItemVO itemVO = new ItemVO();
+        itemVO.setItemId(itemInfo.getId());
+        return result > 0 ? Result.success(SuccessCode.SUCCESS, itemVO) : Result.error("更新失败");
+    }
+
+    @Override
+    public Result<String> deleteItem(Long id) {
+        RoleCode roleCode = RoleCode.fromAccount(BaseContext.getCurrentAccount());
+        if (roleCode != RoleCode.SELLER_ROLE_CODE) {
+            return Result.error("权限不足");
+        }
+        return itemInfoMapper.deleteById(id) > 0 ? Result.success(SuccessCode.SUCCESS) : Result.error("删除失败");
+    }
 }

@@ -25,4 +25,8 @@ public interface IItemInfoService extends IService<ItemInfo> {
     Result<List<ListItemVO>> getItemList();
 
     Result<ItemInfoVO> getItemInfo(Long id);
+
+    Result<ItemVO> updateItem(Long id, ItemDTO itemDTO);
+
+    Result<String> deleteItem(Long id);
 }
