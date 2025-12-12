@@ -2,7 +2,10 @@ package com.lggyx.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lggyx.context.BaseContext;
 import com.lggyx.dto.LoginDTO;
+import com.lggyx.dto.PasswordDTO;
+import com.lggyx.dto.ProfileDTO;
 import com.lggyx.dto.RegisterDTO;
 import com.lggyx.entity.User;
 import com.lggyx.enumeration.ErrorCode;
@@ -12,6 +15,7 @@ import com.lggyx.result.Result;
 import com.lggyx.service.IUserService;
 import com.lggyx.utils.JwtUtil;
 import com.lggyx.vo.LoginVO;
+import com.lggyx.vo.ProfileVO;
 import com.lggyx.vo.RegisterVO;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
@@ -75,8 +79,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         JwtUtil jwtUtil = new JwtUtil(jwtProperties);
         loginVO.setUserId(user.getId());
         loginVO.setRole("user");
-        loginVO.setToken(jwtUtil.generateToken("user_" + user.getUsername()));
+        loginVO.setToken(jwtUtil.generateToken("user___" + user.getUsername()));
         loginVO.setExpireTime(String.valueOf(jwtProperties.getTtl()));
         return Result.success(loginVO);
+    }
+
+    @Override
+    public Result<ProfileVO> getProfile() {
+        String account = BaseContext.getCurrentAccount().substring(7);
+        User user = userMapper.selectOne(
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, account));
+        ProfileVO profileVO = new ProfileVO();
+        BeanUtils.copyProperties(user, profileVO);
+        return Result.success(profileVO);
+    }
+
+    @Override
+    public Result<String> updateProfile(ProfileDTO profileDTO) {
+        return null;
+    }
+
+    @Override
+    public Result<String> updatePassword(PasswordDTO passwordDTO) {
+        String oldPassword = passwordDTO.getOldPassword();
+        String newPassword = passwordDTO.getNewPassword();
+        String account = BaseContext.getCurrentAccount().substring(7);
+        User user = userMapper.selectOne(
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, account));
+        if (!user.getPassword().equals(oldPassword)) {
+            return Result.error(ErrorCode.PASSWORD_ERROR);
+        }
+        user.setPassword(newPassword);
+        int update = userMapper.update(user,
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, account));
+        if (update > 0) {
+            return Result.success("修改成功");
+        }
+        return Result.error("修改失败");
     }
 }

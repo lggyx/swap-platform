@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RegisterVO {
     @Schema(description = "用户id")
-    private long user_id;
+    private long userId;
     @Schema(description = "用户名")
     private String username;
     @Schema(description = "token")

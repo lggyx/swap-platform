@@ -66,7 +66,7 @@ public  class JwtFilter extends OncePerRequestFilter {
 
             String account = jwtUtil.getAccountFromToken(token);
             request.setAttribute("account", account);
-            BaseContext.setCurrentAccount( account);
+            BaseContext.setCurrentAccount(account);
             chain.doFilter(request, response);
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

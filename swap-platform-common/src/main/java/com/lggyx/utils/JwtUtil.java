@@ -48,6 +48,24 @@ public class JwtUtil {
             return false;
         }
     }
+    public boolean isExpired(String token) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+        return expiration.before(new Date());
+    }
+    //删除token
+    public void deleteToken(String token) {
+        Jwts.builder()
+                .setSubject(null)
+                .setExpiration(new Date())
+                .signWith(Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes()))
+                .compact();
+    }
 
 
 }

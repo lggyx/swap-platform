@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/api/auth")
-@Tag(name = "用户注册")
+@Tag(name = "用户认证管理")
 public class RegisterController {
     @Resource
     private IUserService userService;
@@ -21,7 +21,7 @@ public class RegisterController {
      * 普通用户注册
      * @return 注册结果
      */
-    @Operation(summary = "普通用户注册")
+    @Operation(summary = "用户注册")
     @PostMapping("/register")
     public Result<RegisterVO> register(@RequestBody RegisterDTO registerDTO) {
         return userService.register(registerDTO);

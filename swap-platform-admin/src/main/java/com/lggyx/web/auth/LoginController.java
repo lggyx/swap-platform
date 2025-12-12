@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "用户登录")
+@Tag(name = "用户认证管理")
 public class LoginController {
     @Resource
     private IUserService userService;
@@ -24,7 +24,7 @@ public class LoginController {
     private ISellerService sellerService;
     @Resource
     private IAdminUserService adminUserService;
-    @Operation(summary = "通用用户登录")
+    @Operation(summary = "用户登录")
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO loginDTO){
         String userType = loginDTO.getUserType();
