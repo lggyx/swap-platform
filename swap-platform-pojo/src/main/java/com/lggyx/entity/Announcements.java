@@ -27,23 +27,23 @@ public class Announcements implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "公告标题")
+    @Schema(description = "公告标题")
     private String title;
 
-    @Schema(name = "简介")
+    @Schema(description = "简介")
     private String introduction;
 
-    @Schema(name = "公告图片URL")
+    @Schema(description = "公告图片URL")
     private String image;
 
-    @Schema(name = "公告内容")
+    @Schema(description = "公告内容")
     private String content;
 
 

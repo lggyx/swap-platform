@@ -27,14 +27,14 @@ public class ItemCategories implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "类型名称")
+    @Schema(description = "类型名称")
     private String categoryName;
 
 

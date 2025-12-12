@@ -27,23 +27,23 @@ public class ItemComments implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "旧物ID")
+    @Schema(description = "旧物ID")
     private Long itemId;
 
-    @Schema(name = "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    @Schema(name = "评论内容")
+    @Schema(description = "评论内容")
     private String content;
 
-    @Schema(name = "回复内容")
+    @Schema(description = "回复内容")
     private String reply;
 
 

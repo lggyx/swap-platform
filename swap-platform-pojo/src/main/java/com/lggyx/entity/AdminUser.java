@@ -27,20 +27,20 @@ public class AdminUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @Schema(name = "密码")
+    @Schema(description = "密码")
     private String password;
 
-    @Schema(name = "角色")
+    @Schema(description = "角色")
     private String role;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
 

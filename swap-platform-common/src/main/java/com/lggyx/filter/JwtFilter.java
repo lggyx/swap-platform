@@ -1,0 +1,77 @@
+package com.lggyx.filter;
+
+import com.lggyx.context.BaseContext;
+import com.lggyx.utils.JwtUtil;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.Set;
+@Slf4j
+public  class JwtFilter extends OncePerRequestFilter {
+    private final JwtUtil jwtUtil;          // ← 构造器注入
+    private static final AntPathMatcher MATCHER = new AntPathMatcher();
+    private static final Set<String> SKIP = Set.of(
+            "/doc.html",
+            "/swagger-ui/*",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/auth/seller/register"
+    );
+
+    public JwtFilter(JwtUtil jwtUtil) {     // ← 手动 new 时传进来
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        // 放行 OPTIONS（CORS 预检）
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+        // 白名单匹配
+        for (String pattern : SKIP) {
+            if (MATCHER.match(pattern, path)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void doFilterInternal( HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     FilterChain chain) throws IOException {
+        try {
+            String header = request.getHeader("Authorization"); //Authorization
+            if (header == null || !header.startsWith("Bearer ")) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid Authorization header");
+                return;
+            }
+
+            String token = header.substring(7);
+            if (!jwtUtil.validateToken(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid or expired token");
+                return;
+            }
+
+            String account = jwtUtil.getAccountFromToken(token);
+            request.setAttribute("account", account);
+            BaseContext.setCurrentAccount( account);
+            chain.doFilter(request, response);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("An error occurred during token validation");
+            log.error("Error during token validation", e);
+        }
+    }
+}

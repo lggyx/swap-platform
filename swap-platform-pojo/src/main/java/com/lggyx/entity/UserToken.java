@@ -28,29 +28,29 @@ public class UserToken implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    @Schema(name = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @Schema(name = "所属表名")
+    @Schema(description = "所属表名")
     private String tableName;
 
-    @Schema(name = "角色")
+    @Schema(description = "角色")
     private String role;
 
-    @Schema(name = "令牌")
+    @Schema(description = "令牌")
     private String token;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "过期时间")
+    @Schema(description = "过期时间")
     private LocalDateTime expireTime;
 
 

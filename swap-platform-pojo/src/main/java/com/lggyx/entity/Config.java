@@ -26,14 +26,14 @@ public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "配置参数名称")
+    @Schema(description = "配置参数名称")
     private String name;
 
-    @Schema(name = "配置参数值")
+    @Schema(description = "配置参数值")
     private String value;
 
 

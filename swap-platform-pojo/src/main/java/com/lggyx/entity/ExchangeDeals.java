@@ -27,41 +27,41 @@ public class ExchangeDeals implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @Schema(name = "真实姓名")
+    @Schema(description = "真实姓名")
     private String realName;
 
-    @Schema(name = "手机号")
+    @Schema(description = "手机号")
     private String phone;
 
-    @Schema(name = "目标旧物名称")
+    @Schema(description = "目标旧物名称")
     private String targetItemName;
 
-    @Schema(name = "目标旧物图片")
+    @Schema(description = "目标旧物图片")
     private String targetItemImage;
 
-    @Schema(name = "置换物名称")
+    @Schema(description = "置换物名称")
     private String offerItemName;
 
-    @Schema(name = "置换物图片")
+    @Schema(description = "置换物图片")
     private String offerItemImage;
 
-    @Schema(name = "置换物详情")
+    @Schema(description = "置换物详情")
     private String offerDetail;
 
-    @Schema(name = "是否审核")
+    @Schema(description = "是否审核")
     private String approved;
 
-    @Schema(name = "审核回复")
+    @Schema(description = "审核回复")
     private String approvalReply;
 
 

@@ -1,7 +1,10 @@
 package com.lggyx.service;
 
+import com.lggyx.dto.LoginDTO;
 import com.lggyx.entity.AdminUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lggyx.result.Result;
+import com.lggyx.vo.LoginVO;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAdminUserService extends IService<AdminUser> {
 
+    Result<LoginVO> login(LoginDTO loginDTO);
 }

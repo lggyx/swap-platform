@@ -27,26 +27,26 @@ public class Favorites implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    @Schema(name = "旧物ID")
+    @Schema(description = "旧物ID")
     private Long itemId;
 
-    @Schema(name = "旧物类型")
+    @Schema(description = "旧物类型")
     private String itemType;
 
-    @Schema(name = "收藏名称")
+    @Schema(description = "收藏名称")
     private String name;
 
-    @Schema(name = "收藏图片URL")
+    @Schema(description = "收藏图片URL")
     private String image;
 
 

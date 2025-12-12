@@ -27,41 +27,41 @@ public class ItemInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键")
+    @Schema(description = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime addTime;
 
-    @Schema(name = "卖家名")
+    @Schema(description = "卖家名")
     private String sellerName;
 
-    @Schema(name = "联系人姓名")
+    @Schema(description = "联系人姓名")
     private String contactName;
 
-    @Schema(name = "联系人手机")
+    @Schema(description = "联系人手机")
     private String contactPhone;
 
-    @Schema(name = "旧物名称")
+    @Schema(description = "旧物名称")
     private String itemName;
 
-    @Schema(name = "旧物类型")
+    @Schema(description = "旧物类型")
     private String itemCategory;
 
-    @Schema(name = "旧物图片URL")
+    @Schema(description = "旧物图片URL")
     private String itemImage;
 
-    @Schema(name = "置换需求")
+    @Schema(description = "置换需求")
     private String exchangeRequest;
 
-    @Schema(name = "旧物详情")
+    @Schema(description = "旧物详情")
     private String itemDetail;
 
-    @Schema(name = "点赞数")
+    @Schema(description = "点赞数")
     private Integer likeCount;
 
-    @Schema(name = "点踩数")
+    @Schema(description = "点踩数")
     private Integer dislikeCount;
 
 
