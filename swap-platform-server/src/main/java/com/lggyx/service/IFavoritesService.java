@@ -1,7 +1,11 @@
 package com.lggyx.service;
 
+import com.lggyx.dto.FavoriteDTO;
 import com.lggyx.entity.Favorites;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lggyx.result.Result;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFavoritesService extends IService<Favorites> {
 
+    Result<String> addFavorite(FavoriteDTO favoriteDTO);
+
+    Result<List<FavoriteDTO>> getFavoriteList();
+
+    Result<String> cancelFavorite(Long id);
 }
