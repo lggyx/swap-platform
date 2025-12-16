@@ -1,6 +1,7 @@
 package com.lggyx.web.items;
 
 import com.lggyx.dto.ItemDTO;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IItemInfoService;
 import com.lggyx.vo.ItemInfoVO;
@@ -26,8 +27,13 @@ public class ItemController {
     }
     @GetMapping("/items")
     @Operation(summary = "获取旧物列表")
-    public Result<List<ListItemVO>> getItemList() {
-        return itemInfoService.getItemList();
+    public Result<PageResult> getItemList(
+            @RequestParam(required = false, defaultValue = "1") Long page,
+            @RequestParam(required = false, defaultValue = "10") Long size,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keywords
+    ) {
+        return itemInfoService.getItemList(page, size, category, keywords);
     }
     @GetMapping("/items/{id}")
     @Operation(summary = "获取旧物详情")

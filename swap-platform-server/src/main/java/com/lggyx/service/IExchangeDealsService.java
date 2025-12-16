@@ -1,7 +1,7 @@
 package com.lggyx.service;
 
 import com.lggyx.dto.ExchangeDealsDTO;
-import com.lggyx.dto.GetExchangeDealsDTO;
+import com.lggyx.vo.ExchangeDealsVO;
 import com.lggyx.entity.ExchangeDeals;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lggyx.result.Result;
@@ -20,7 +20,7 @@ public interface IExchangeDealsService extends IService<ExchangeDeals> {
 
     Result<String> addExchangeDeals(ExchangeDealsDTO exchangeDealsDTO);
 
-    Result<List<GetExchangeDealsDTO>> getExchangeDealsList();
+    Result<List<ExchangeDealsVO>> getExchangeDealsList();
 
     Result<String> approveExchangeDeals(Long dealId);
 }

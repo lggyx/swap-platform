@@ -1,6 +1,8 @@
 package com.lggyx.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lggyx.context.BaseContext;
 import com.lggyx.dto.ItemDTO;
@@ -9,12 +11,12 @@ import com.lggyx.entity.Seller;
 import com.lggyx.enumeration.RoleCode;
 import com.lggyx.enumeration.SuccessCode;
 import com.lggyx.mapper.ItemInfoMapper;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IItemInfoService;
 import com.lggyx.service.ISellerService;
 import com.lggyx.vo.ItemInfoVO;
 import com.lggyx.vo.ItemVO;
-import com.lggyx.vo.ListItemVO;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -56,16 +58,24 @@ public class ItemInfoServiceImpl extends ServiceImpl<ItemInfoMapper, ItemInfo> i
     }
 
     @Override
-    public Result<List<ListItemVO>> getItemList() {
-        List<ItemInfo> itemInfoList = itemInfoMapper.selectList(null);
-        List<ListItemVO> listItemVOList = itemInfoList.stream()
-                .map(itemInfo -> {
-                            ListItemVO listItemVO = new ListItemVO();
-                            BeanUtils.copyProperties(itemInfo, listItemVO);
-                            return listItemVO;
-                        }
-                ).toList();
-        return Result.success(listItemVOList);
+    public Result<PageResult> getItemList(Long page, Long size, String category, String keyword) {
+        Page<ItemInfo> itemInfoPage = new Page<>(page, size);
+        Page<ItemInfo> itemInfoPageResult = itemInfoMapper.selectPage(itemInfoPage, Wrappers.<ItemInfo>lambdaQuery()
+                .like(StringUtils.isNotBlank(category), ItemInfo::getItemCategory, category)
+                .like(StringUtils.isNotBlank(keyword), ItemInfo::getItemName, keyword));
+        List<ItemInfoVO> itemInfoList = itemInfoPageResult.getRecords().stream().map(itemInfo -> {
+            ItemInfoVO itemInfoVO = new ItemInfoVO();
+            BeanUtils.copyProperties(itemInfo, itemInfoVO);
+            return itemInfoVO;
+        }).toList();
+        PageResult pageResult = new PageResult(
+                itemInfoList.size(),
+                itemInfoPageResult.getCurrent(),
+                itemInfoPageResult.getSize(),
+                itemInfoList
+        );
+
+        return Result.success(pageResult);
     }
 
     @Override

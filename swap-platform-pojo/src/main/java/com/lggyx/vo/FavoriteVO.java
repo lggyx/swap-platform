@@ -1,4 +1,4 @@
-package com.lggyx.dto;
+package com.lggyx.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.Data;
  * @since 2025-12-11
  */
 @Data
-public class FavoriteDTO {
+public class FavoriteVO {
 
     @Schema(description = "旧物ID")
     private Long itemId;

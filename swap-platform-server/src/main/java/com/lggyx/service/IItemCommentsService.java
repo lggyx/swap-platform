@@ -4,6 +4,7 @@ import com.lggyx.dto.CommentDTO;
 import com.lggyx.dto.ReplyDTO;
 import com.lggyx.entity.ItemComments;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.vo.CommentVO;
 
@@ -21,7 +22,7 @@ public interface IItemCommentsService extends IService<ItemComments> {
 
     Result<String> addComment(CommentDTO commentDTO);
 
-    Result<List<CommentVO>> getCommentList(Long itemId, Long page, Long size);
+    Result<PageResult> getCommentList(Long itemId, Long page, Long size);
 
     Result<String> replyComment(Long id, ReplyDTO replyDTO);
 }

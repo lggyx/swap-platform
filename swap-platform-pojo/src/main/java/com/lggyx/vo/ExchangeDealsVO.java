@@ -1,4 +1,4 @@
-package com.lggyx.dto;
+package com.lggyx.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class GetExchangeDealsDTO {
+public class ExchangeDealsVO {
 
     @Schema(description = "主键")
     private Long id;

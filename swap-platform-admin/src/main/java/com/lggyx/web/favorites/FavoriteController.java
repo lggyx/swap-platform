@@ -1,14 +1,13 @@
 package com.lggyx.web.favorites;
 
-import com.lggyx.dto.FavoriteDTO;
+import com.lggyx.vo.FavoriteVO;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IFavoritesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -18,13 +17,16 @@ public class FavoriteController {
     private IFavoritesService favoriteService;
     @PostMapping("/favorites")
     @Operation(summary = "添加收藏")
-    public Result<String> addFavorite(@RequestBody FavoriteDTO favoriteDTO) {
-        return favoriteService.addFavorite(favoriteDTO);
+    public Result<String> addFavorite(@RequestBody FavoriteVO favoriteVO) {
+        return favoriteService.addFavorite(favoriteVO);
     }
     @GetMapping("/favorites")
     @Operation(summary = "获取收藏列表")
-    public Result<List<FavoriteDTO>> getFavoriteList(){
-        return favoriteService.getFavoriteList();
+    public Result<PageResult> getFavoriteList(
+            @RequestParam(required = false, defaultValue = "1") Long page,
+            @RequestParam(required = false, defaultValue = "10") Long size
+    ){
+        return favoriteService.getFavoriteList(page, size);
     }
     @DeleteMapping("/favorites/{id}")
     @Operation(summary = "取消收藏")

@@ -16,6 +16,7 @@ import com.lggyx.mapper.AdminUserMapper;
 import com.lggyx.mapper.ItemCommentsMapper;
 import com.lggyx.mapper.SellerMapper;
 import com.lggyx.mapper.UserMapper;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IItemCommentsService;
 import com.lggyx.vo.CommentVO;
@@ -80,7 +81,7 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
     }
 
     @Override
-    public Result<List<CommentVO>> getCommentList(Long itemId, Long page, Long size) {
+    public Result<PageResult> getCommentList(Long itemId, Long page, Long size) {
         //todo 分页
         Page<ItemComments> itemCommentsPage = new Page<>(page, size);
         List<ItemComments> itemCommentsList = itemCommentsMapper.selectList(itemCommentsPage,
@@ -93,7 +94,12 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
             BeanUtils.copyProperties(itemComments, commentVO);
             return commentVO;
         }).toList();
-        return Result.success(commentVOList);
+        PageResult pageResult = new PageResult(
+                itemCommentsList.size(),
+                itemCommentsPage.getCurrent(),
+                itemCommentsPage.getSize(),
+                commentVOList);
+        return Result.success(pageResult);
     }
 
     @Override

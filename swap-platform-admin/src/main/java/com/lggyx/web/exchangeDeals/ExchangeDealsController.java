@@ -2,7 +2,7 @@ package com.lggyx.web.exchangeDeals;
 
 
 import com.lggyx.dto.ExchangeDealsDTO;
-import com.lggyx.dto.GetExchangeDealsDTO;
+import com.lggyx.vo.ExchangeDealsVO;
 import com.lggyx.result.Result;
 import com.lggyx.service.IExchangeDealsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +34,7 @@ public class ExchangeDealsController {
     }
     @GetMapping("/exchange-deals")
     @Operation(summary = "获取置换交易列表")
-    public Result<List<GetExchangeDealsDTO>> getExchangeDealsList(){
+    public Result<List<ExchangeDealsVO>> getExchangeDealsList(){
         return exchangeDealsService.getExchangeDealsList();
     }
     @PutMapping("/exchange-deals/{dealId}/approve")

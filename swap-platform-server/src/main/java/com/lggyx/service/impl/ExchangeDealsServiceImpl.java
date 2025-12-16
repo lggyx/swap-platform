@@ -3,7 +3,7 @@ package com.lggyx.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lggyx.context.BaseContext;
 import com.lggyx.dto.ExchangeDealsDTO;
-import com.lggyx.dto.GetExchangeDealsDTO;
+import com.lggyx.vo.ExchangeDealsVO;
 import com.lggyx.entity.ExchangeDeals;
 import com.lggyx.enumeration.ErrorCode;
 import com.lggyx.enumeration.RoleCode;
@@ -40,13 +40,13 @@ public class ExchangeDealsServiceImpl extends ServiceImpl<ExchangeDealsMapper, E
     }
 
     @Override
-    public Result<List<GetExchangeDealsDTO>> getExchangeDealsList() {
+    public Result<List<ExchangeDealsVO>> getExchangeDealsList() {
         List<ExchangeDeals> list = exchangeDealsMapper.selectList(null);
         return Result.success(SuccessCode.SUCCESS, list.stream()
                 .map(exchangeDeals -> {
-                    GetExchangeDealsDTO getExchangeDealsDTO = new GetExchangeDealsDTO();
-                    BeanUtils.copyProperties(exchangeDeals, getExchangeDealsDTO);
-                    return getExchangeDealsDTO;
+                    ExchangeDealsVO exchangeDealsVO = new ExchangeDealsVO();
+                    BeanUtils.copyProperties(exchangeDeals, exchangeDealsVO);
+                    return exchangeDealsVO;
                 }).toList());
     }
 

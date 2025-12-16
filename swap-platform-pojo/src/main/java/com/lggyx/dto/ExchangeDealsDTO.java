@@ -19,10 +19,6 @@ import java.time.LocalDateTime;
  * @since 2025-12-11
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-@TableName("exchange_deals")
-@Schema(name="ExchangeDeals对象", description="置换交易")
 public class ExchangeDealsDTO {
 
     @Schema(description = "用户名")

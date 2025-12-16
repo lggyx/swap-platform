@@ -2,6 +2,7 @@ package com.lggyx.web.comments;
 
 import com.lggyx.dto.CommentDTO;
 import com.lggyx.dto.ReplyDTO;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IItemCommentsService;
 import com.lggyx.vo.CommentVO;
@@ -27,7 +28,7 @@ public class CommentController {
 
     @GetMapping("/comments")
     @Operation(summary = "获取评论列表")
-    public Result<List<CommentVO>> getCommentList(
+    public Result<PageResult> getCommentList(
             @RequestParam Long itemId,
             @RequestParam(required = false, defaultValue = "1") Long page,
             @RequestParam(required = false, defaultValue = "10") Long size
