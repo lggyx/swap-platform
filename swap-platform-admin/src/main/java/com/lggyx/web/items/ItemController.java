@@ -13,6 +13,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -50,5 +51,10 @@ public class ItemController {
     @Operation(summary = "删除旧物信息（卖家）")
     public Result<String> deleteItem(@PathVariable Long id) {
         return itemInfoService.deleteItem(id);
+    }
+    @PostMapping("/items/{id}/reaction")
+    @Operation(summary = "点赞/点踩旧物")
+    public Result<String> reactionItem(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        return itemInfoService.reactionItem(id, body.get("type"));
     }
 }

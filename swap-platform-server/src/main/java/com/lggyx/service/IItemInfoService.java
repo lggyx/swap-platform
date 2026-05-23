@@ -30,4 +30,6 @@ public interface IItemInfoService extends IService<ItemInfo> {
     Result<ItemVO> updateItem(Long id, ItemDTO itemDTO);
 
     Result<String> deleteItem(Long id);
+
+    Result<String> reactionItem(Long id, String type);
 }

@@ -11,6 +11,7 @@ import com.lggyx.entity.User;
 import com.lggyx.enumeration.ErrorCode;
 import com.lggyx.mapper.UserMapper;
 import com.lggyx.properties.JwtProperties;
+import com.lggyx.result.PageResult;
 import com.lggyx.result.Result;
 import com.lggyx.service.IUserService;
 import com.lggyx.utils.JwtUtil;
@@ -97,7 +98,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Result<String> updateProfile(ProfileDTO profileDTO) {
-        return null;
+        String account = BaseContext.getCurrentAccount().substring(7);
+        User user = userMapper.selectOne(
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, account));
+        if (user == null) {
+            return Result.error("用户不存在");
+        }
+        user.setRealName(profileDTO.getRealName());
+        user.setGender(profileDTO.getGender());
+        user.setPhone(profileDTO.getPhone());
+        user.setEmail(profileDTO.getEmail());
+        user.setPhoto(profileDTO.getPhoto());
+        int update = userMapper.update(user,
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, account));
+        if (update > 0) {
+            return Result.success("修改成功");
+        }
+        return Result.error("修改失败");
+    }
+
+    @Override
+    public PageResult getUserList(Long page, Long size) {
+        Page<User> userPage = new Page<>(page, size);
+        Page<User> result = userMapper.selectPage(userPage, null);
+        return new PageResult(result.getTotal(), result.getCurrent(), result.getSize(), result.getRecords());
     }
 
     @Override

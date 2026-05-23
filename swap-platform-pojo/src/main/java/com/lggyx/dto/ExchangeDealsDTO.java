@@ -21,20 +21,8 @@ import java.time.LocalDateTime;
 @Data
 public class ExchangeDealsDTO {
 
-    @Schema(description = "用户名")
-    private String username;
-
-    @Schema(description = "真实姓名")
-    private String realName;
-
-    @Schema(description = "手机号")
-    private String phone;
-
-    @Schema(description = "目标旧物名称")
-    private String targetItemName;
-
-    @Schema(description = "目标旧物图片")
-    private String targetItemImage;
+    @Schema(description = "目标旧物ID")
+    private Long targetItemId;
 
     @Schema(description = "置换物名称")
     private String offerItemName;
@@ -44,10 +32,5 @@ public class ExchangeDealsDTO {
 
     @Schema(description = "置换物详情")
     private String offerDetail;
-
-    @Schema(description = "是否审核")
-    private String approved;
-
-
 
 }

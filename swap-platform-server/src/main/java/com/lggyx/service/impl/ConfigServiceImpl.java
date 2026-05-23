@@ -3,18 +3,34 @@ package com.lggyx.service.impl;
 import com.lggyx.entity.Config;
 import com.lggyx.mapper.ConfigMapper;
 import com.lggyx.service.IConfigService;
+import com.lggyx.vo.ConfigVO;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-/**
- * <p>
- * 系统配置 服务实现类
- * </p>
- *
- * @author lggyx
- * @since 2025-12-11
- */
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, Config> implements IConfigService {
 
+    @Override
+    public List<ConfigVO> getBanners() {
+        List<Config> configs = list(Wrappers.<Config>lambdaQuery()
+                .in(Config::getName, "banner1", "banner2", "banner3"));
+        return configs.stream().map(config -> {
+            ConfigVO vo = new ConfigVO();
+            BeanUtils.copyProperties(config, vo);
+            return vo;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public String updateConfig(String configName, String value) {
+        int update = update(null, Wrappers.<Config>lambdaUpdate()
+                .set(Config::getValue, value)
+                .eq(Config::getName, configName));
+        return update > 0 ? "修改成功" : "修改失败";
+    }
 }

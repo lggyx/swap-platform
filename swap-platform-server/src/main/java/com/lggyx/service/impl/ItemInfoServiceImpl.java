@@ -113,6 +113,34 @@ public class ItemInfoServiceImpl extends ServiceImpl<ItemInfoMapper, ItemInfo> i
         if (roleCode != RoleCode.SELLER_ROLE_CODE) {
             return Result.error("权限不足");
         }
+        ItemInfo itemInfo = itemInfoMapper.selectById(id);
+        if (itemInfo == null) {
+            return Result.error("无效的ID");
+        }
+        if (!itemInfo.getSellerName().equals(BaseContext.getCurrentAccount().substring(7))) {
+            return Result.error("无权删除他人发布的物品");
+        }
         return itemInfoMapper.deleteById(id) > 0 ? Result.success(SuccessCode.SUCCESS) : Result.error("删除失败");
+    }
+
+    @Override
+    public Result<String> reactionItem(Long id, String type) {
+        ItemInfo itemInfo = itemInfoMapper.selectById(id);
+        if (itemInfo == null) {
+            return Result.error("无效的ID");
+        }
+        int result;
+        if ("like".equalsIgnoreCase(type)) {
+            result = itemInfoMapper.update(null, Wrappers.<ItemInfo>lambdaUpdate()
+                    .set(ItemInfo::getLikeCount, itemInfo.getLikeCount() + 1)
+                    .eq(ItemInfo::getId, id));
+        } else if ("dislike".equalsIgnoreCase(type)) {
+            result = itemInfoMapper.update(null, Wrappers.<ItemInfo>lambdaUpdate()
+                    .set(ItemInfo::getDislikeCount, itemInfo.getDislikeCount() + 1)
+                    .eq(ItemInfo::getId, id));
+        } else {
+            return Result.error("type 参数只能是 like 或 dislike");
+        }
+        return result > 0 ? Result.success(SuccessCode.SUCCESS) : Result.error("操作失败");
     }
 }
