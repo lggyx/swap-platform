@@ -25,16 +25,17 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     const res = response.data
-    // 后端返回 code 非 200 视为业务错误
-    if (res.code !== 200) {
-      ElMessage.error(res.msg || '请求失败')
-      return Promise.reject(new Error(res.msg || '请求失败'))
+    // 后端约定 code=1 表示成功，兼容字符串 "1"
+    if (res.code != null && Number(res.code) !== 1) {
+      ElMessage.error(res.msg || res.message || '请求失败')
+      return Promise.reject(new Error(res.msg || res.message || '请求失败'))
     }
     return res.data
   },
   (error) => {
-    ElMessage.error(error.message || '网络错误')
-    return Promise.reject(error)
+    const msg = error.response?.data?.msg || error.response?.data?.message || error.message || '网络错误'
+    ElMessage.error(msg)
+    return Promise.reject(new Error(msg))
   }
 )
 
