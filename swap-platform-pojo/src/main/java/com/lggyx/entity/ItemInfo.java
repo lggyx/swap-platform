@@ -64,5 +64,11 @@ public class ItemInfo implements Serializable {
     @Schema(description = "点踩数")
     private Integer dislikeCount;
 
+    @Schema(description = "审核状态：0待审核 1通过 2驳回")
+    private Integer auditStatus;
+
+    @Schema(description = "审核回复")
+    private String approvalReply;
+
 
 }

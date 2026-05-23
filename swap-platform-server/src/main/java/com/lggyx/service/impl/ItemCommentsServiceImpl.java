@@ -117,4 +117,11 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
                 Result.success(SuccessCode.SUCCESS, "回复成功") :
                 Result.error("回复失败");
     }
+
+    @Override
+    public Result<String> adminDeleteComment(Long commentId) {
+        return itemCommentsMapper.deleteById(commentId) > 0 ?
+                Result.success("删除成功") :
+                Result.error("删除失败");
+    }
 }

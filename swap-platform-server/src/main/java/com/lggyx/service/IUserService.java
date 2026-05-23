@@ -28,5 +28,5 @@ public interface IUserService extends IService<User> {
 
     Result<String> updatePassword(PasswordDTO passwordDTO);
 
-    PageResult getUserList(Long page, Long size);
+    Result<PageResult> getUserList(Long page, Long size);
 }

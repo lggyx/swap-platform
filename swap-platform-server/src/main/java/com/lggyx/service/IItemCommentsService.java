@@ -25,4 +25,6 @@ public interface IItemCommentsService extends IService<ItemComments> {
     Result<PageResult> getCommentList(Long itemId, Long page, Long size);
 
     Result<String> replyComment(Long id, ReplyDTO replyDTO);
+
+    Result<String> adminDeleteComment(Long commentId);
 }

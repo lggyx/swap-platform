@@ -32,4 +32,6 @@ public interface IItemInfoService extends IService<ItemInfo> {
     Result<String> deleteItem(Long id);
 
     Result<String> reactionItem(Long id, String type);
+
+    Result<String> auditItem(Long itemId, String approved, String approvalReply);
 }

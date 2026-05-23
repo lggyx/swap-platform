@@ -1,6 +1,7 @@
 package com.lggyx.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lggyx.context.BaseContext;
 import com.lggyx.dto.LoginDTO;
@@ -120,10 +121,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public PageResult getUserList(Long page, Long size) {
+    public Result<PageResult> getUserList(Long page, Long size) {
         Page<User> userPage = new Page<>(page, size);
         Page<User> result = userMapper.selectPage(userPage, null);
-        return new PageResult(result.getTotal(), result.getCurrent(), result.getSize(), result.getRecords());
+        return Result.success(new PageResult(result.getTotal(), result.getCurrent(), result.getSize(), result.getRecords()));
     }
 
     @Override

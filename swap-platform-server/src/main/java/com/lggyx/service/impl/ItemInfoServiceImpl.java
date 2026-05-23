@@ -143,4 +143,17 @@ public class ItemInfoServiceImpl extends ServiceImpl<ItemInfoMapper, ItemInfo> i
         }
         return result > 0 ? Result.success(SuccessCode.SUCCESS) : Result.error("操作失败");
     }
+
+    @Override
+    public Result<String> auditItem(Long itemId, String approved, String approvalReply) {
+        ItemInfo itemInfo = itemInfoMapper.selectById(itemId);
+        if (itemInfo == null) {
+            return Result.error("无效的ID");
+        }
+        int status = "true".equalsIgnoreCase(approved) || "1".equals(approved) ? 1 : 0;
+        itemInfo.setAuditStatus(status);
+        itemInfo.setApprovalReply(approvalReply);
+        int result = itemInfoMapper.updateById(itemInfo);
+        return result > 0 ? Result.success("审核成功") : Result.error("审核失败");
+    }
 }
