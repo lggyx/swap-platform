@@ -45,7 +45,7 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
         Favorites favorites = new Favorites();
         BeanUtils.copyProperties(favoriteVO, favorites);
         Long userId = userMapper.selectOne(Wrappers.<User>lambdaQuery()
-                        .eq(User::getUsername, BaseContext.getCurrentAccount().substring(7)))
+                        .eq(User::getUsername, BaseContext.getCurrentAccount().substring(RoleCode.USER_ROLE_CODE.getRoleStr().length())))
                 .getId();
         favorites.setUserId(userId);
         int insert = favoritesMapper.insert(favorites);
@@ -64,7 +64,7 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
             return Result.error(ErrorCode.NO_ACCESS_ADMIN_API);
         }
         Long userId = userMapper.selectOne(Wrappers.<User>lambdaQuery()
-                        .eq(User::getUsername, BaseContext.getCurrentAccount().substring(7)))
+                        .eq(User::getUsername, BaseContext.getCurrentAccount().substring(RoleCode.USER_ROLE_CODE.getRoleStr().length())))
                 .getId();
         Page<Favorites> pageInfo = new Page<>(page, size);
         List<Favorites> favoritesList = favoritesMapper.selectPage(pageInfo,

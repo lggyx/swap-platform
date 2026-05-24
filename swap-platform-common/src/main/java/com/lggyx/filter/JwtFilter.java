@@ -22,13 +22,12 @@ public  class JwtFilter extends OncePerRequestFilter {
             "/v3/api-docs/**",
             // 认证接口（不需要token）
             "/api/auth/login",
-            "/register",
-            "/seller/register",
+            "/api/auth/register",
+            "/api/auth/seller/register",
             // 公开查询接口（不需要登录即可访问）
             "/user",
             "/api/categories",
             "/api/items",
-            "/api/comments",
             "/api/announcements",
             "/api/config/banners"
     );
@@ -42,6 +41,10 @@ public  class JwtFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         // 放行 OPTIONS（CORS 预检）
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+        // 评论列表允许匿名查看，发布评论需登录
+        if ("GET".equalsIgnoreCase(request.getMethod()) && "/api/comments".equals(path)) {
             return true;
         }
         // 白名单匹配

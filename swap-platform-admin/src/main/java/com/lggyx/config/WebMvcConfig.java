@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/auth/login", "/api/auth/register",
-                        "/api/categories", "/api/comments", "/api/favorites",
+                        "/api/categories", "/api/favorites",
                         "/api/exchange-deals", "/api/announcements", "/api/config/banners");
     }
 }

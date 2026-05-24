@@ -24,6 +24,10 @@ const handleLogin = async () => {
   try {
     const res = await login(loginForm.value)
     log('登录结果', res)
+    if (res?.token) {
+      localStorage.setItem('token', res.token)
+      ElMessage.success('登录成功，token 已保存')
+    }
   } catch (e) {
     log('登录失败', e)
   }
@@ -59,7 +63,7 @@ const handleProfile = async () => {
 
 <template>
   <div class="debug-page">
-    <el-page-header @back="$router.back()" content="接口调试" style="margin-bottom: 20px" />
+    <el-page-header @back="router.back()" content="接口调试" style="margin-bottom: 20px" />
     <el-tabs v-model="activeTab">
       <el-tab-pane label="登录" name="login">
         <el-form :model="loginForm" label-width="80px">
@@ -71,8 +75,9 @@ const handleProfile = async () => {
           </el-form-item>
           <el-form-item label="用户类型">
             <el-radio-group v-model="loginForm.userType">
-              <el-radio label="user">普通用户</el-radio>
-              <el-radio label="seller">卖家</el-radio>
+              <el-radio value="user">普通用户</el-radio>
+              <el-radio value="seller">卖家</el-radio>
+              <el-radio value="admin">管理员</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-button type="primary" @click="handleLogin">登录</el-button>

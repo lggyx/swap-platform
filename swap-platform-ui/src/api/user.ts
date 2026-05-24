@@ -10,7 +10,7 @@ export const register = (data: {
   phone: string
   email: string
   photo?: string
-}) => request.post('/register', data)
+}) => request.post('/api/auth/register', data)
 
 // 卖家注册
 export const registerSeller = (data: {
@@ -21,7 +21,7 @@ export const registerSeller = (data: {
   phone: string
   email: string
   photo?: string
-}) => request.post('/seller/register', data)
+}) => request.post('/api/auth/seller/register', data)
 
 // 登录
 export const login = (data: {
@@ -65,7 +65,7 @@ export const adminGetUsers = () => request.get('/api/admin/users')
 export const adminStatistics = () => request.get('/api/admin/statistics')
 
 // 管理员：审核物品
-export const adminAuditItem = (itemId: number, data: { passed?: boolean; remark?: string }) =>
+export const adminAuditItem = (itemId: number, data: { approved?: boolean; approvalReply?: string }) =>
   request.put(`/api/admin/items/${itemId}/audit`, data)
 
 // 管理员：删除评论

@@ -30,6 +30,11 @@
         <artifactId>swap-platform-common</artifactId>
         <version>${swap-platform.version}</version>
     </dependency>
+    <dependency>
+        <groupId>com.lggyx</groupId>
+        <artifactId>swap-platform-pojo</artifactId>
+        <version>${swap-platform.version}</version>
+    </dependency>
 </dependencies>
 
 </project>

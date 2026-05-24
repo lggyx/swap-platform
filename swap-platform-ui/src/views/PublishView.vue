@@ -52,9 +52,9 @@ const handleSubmit = async () => {
           <el-select v-model="form.itemCategory" placeholder="请选择分类" style="width: 100%">
             <el-option
               v-for="cat in categories"
-              :key="cat.category"
-              :label="cat.category"
-              :value="cat.category"
+              :key="cat.id"
+              :label="cat.categoryName"
+              :value="cat.categoryName"
             />
           </el-select>
         </el-form-item>

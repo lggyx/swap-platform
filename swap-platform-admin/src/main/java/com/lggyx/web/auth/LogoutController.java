@@ -1,6 +1,7 @@
 package com.lggyx.web.auth;
 
 import com.lggyx.context.BaseContext;
+import com.lggyx.enumeration.RoleCode;
 import com.lggyx.properties.JwtProperties;
 import com.lggyx.result.Result;
 import com.lggyx.utils.JwtUtil;
@@ -24,6 +25,6 @@ public class LogoutController {
     public Result<String> logout() {
         JwtUtil jwtUtil = new JwtUtil(jwtProperties);
         jwtUtil.deleteToken(BaseContext.getCurrentToken());
-        return Result.success(BaseContext.getCurrentAccount().substring(7)+"登出成功");
+        return Result.success(BaseContext.getCurrentAccount().substring(RoleCode.fromAccount(BaseContext.getCurrentAccount()).getRoleStr().length())+"登出成功");
     }
 }

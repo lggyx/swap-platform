@@ -47,28 +47,32 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
 
     @Override
     public Result<String> addComment(CommentDTO commentDTO) {
+        String account = BaseContext.getCurrentAccount();
+        if (account == null) {
+            return Result.error("未登录");
+        }
         ItemComments itemComments = new ItemComments();
         BeanUtils.copyProperties(commentDTO, itemComments);
-        RoleCode roleCode = RoleCode.fromAccount(BaseContext.getCurrentAccount());
+        RoleCode roleCode = RoleCode.fromAccount(account);
         switch (roleCode) {
             case USER_ROLE_CODE:
                 Long userId = userMapper.selectOne(
                         Wrappers.<User>lambdaQuery()
-                                .eq(User::getUsername, BaseContext.getCurrentAccount().substring(7))
+                                .eq(User::getUsername, account.substring(roleCode.getRoleStr().length()))
                 ).getId();
                 itemComments.setUserId(userId);
                 break;
             case SELLER_ROLE_CODE:
                 Long sellerId = sellerMapper.selectOne(
                         Wrappers.<Seller>lambdaQuery()
-                                .eq(Seller::getSellerName, BaseContext.getCurrentAccount().substring(7))
+                                .eq(Seller::getSellerName, account.substring(roleCode.getRoleStr().length()))
                 ).getId();
                 itemComments.setUserId(sellerId);
                 break;
             case ADMIN_ROLE_CODE:
                 Long adminId = adminUserMapper.selectOne(
                         Wrappers.<AdminUser>lambdaQuery()
-                                .eq(AdminUser::getUsername, BaseContext.getCurrentAccount().substring(7))
+                                .eq(AdminUser::getUsername, account.substring(roleCode.getRoleStr().length()))
                 ).getId();
                 itemComments.setUserId(adminId);
                 break;
@@ -76,7 +80,7 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
                 return Result.error("权限不足");
         }
         return itemCommentsMapper.insert(itemComments) > 0 ?
-                Result.success(SuccessCode.SUCCESS, itemComments.getId()) :
+                Result.success(SuccessCode.SUCCESS, String.valueOf(itemComments.getId())) :
                 Result.error("评论失败");
     }
 
@@ -104,7 +108,11 @@ public class ItemCommentsServiceImpl extends ServiceImpl<ItemCommentsMapper, Ite
 
     @Override
     public Result<String> replyComment(Long id, ReplyDTO replyDTO) {
-        RoleCode roleCode = RoleCode.fromAccount(BaseContext.getCurrentAccount());
+        String account = BaseContext.getCurrentAccount();
+        if (account == null) {
+            return Result.error("未登录");
+        }
+        RoleCode roleCode = RoleCode.fromAccount(account);
         if (roleCode != RoleCode.SELLER_ROLE_CODE) {
             return Result.error("权限不足");
         }

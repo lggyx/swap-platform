@@ -16,7 +16,5 @@ export const addExchangeDeals = (data: {
 }) => request.post('/api/exchange-deals', data)
 
 // 审核置换申请
-export const approveExchangeDeals = (dealId: number, data: {
-  approved: string
-  approvalReply: string
-}) => request.put(`/api/exchange-deals/${dealId}/approve`, data)
+export const approveExchangeDeals = (dealId: number) =>
+  request.put(`/api/exchange-deals/${dealId}/approve`)

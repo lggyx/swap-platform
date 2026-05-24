@@ -35,7 +35,18 @@ export interface ProfileVO {
 }
 
 export interface ItemVO {
-  itemId: number
+  id: number
+  itemName: string
+  itemCategory: string
+  itemImage: string
+  exchangeRequest: string
+  itemDetail: string
+  likeCount: number
+  dislikeCount: number
+  addTime: string
+  sellerName: string
+  contactName: string
+  contactPhone: string
 }
 
 export interface ItemInfoVO {

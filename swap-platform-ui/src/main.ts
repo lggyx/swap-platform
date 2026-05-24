@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import { ElMessage } from 'element-plus'
 import App from './App.vue'
 import './style.css'
 
@@ -28,6 +29,7 @@ router.beforeEach((to, _from, next) => {
   document.title = (to.meta.title as string) || '闲置交换平台'
   const token = localStorage.getItem('token')
   if (to.meta.auth && !token) {
+    ElMessage.warning('请先登录后再访问')
     next({ name: 'home' })
   } else {
     next()

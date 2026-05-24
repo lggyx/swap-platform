@@ -10,6 +10,7 @@ import com.lggyx.dto.ProfileDTO;
 import com.lggyx.dto.RegisterDTO;
 import com.lggyx.entity.User;
 import com.lggyx.enumeration.ErrorCode;
+import com.lggyx.enumeration.RoleCode;
 import com.lggyx.mapper.UserMapper;
 import com.lggyx.properties.JwtProperties;
 import com.lggyx.result.PageResult;
@@ -88,7 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Result<ProfileVO> getProfile() {
-        String account = BaseContext.getCurrentAccount().substring(7);
+        String account = BaseContext.getCurrentAccount().substring(RoleCode.USER_ROLE_CODE.getRoleStr().length());
         User user = userMapper.selectOne(
                 Wrappers.<User>lambdaQuery()
                         .eq(User::getUsername, account));
@@ -99,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Result<String> updateProfile(ProfileDTO profileDTO) {
-        String account = BaseContext.getCurrentAccount().substring(7);
+        String account = BaseContext.getCurrentAccount().substring(RoleCode.USER_ROLE_CODE.getRoleStr().length());
         User user = userMapper.selectOne(
                 Wrappers.<User>lambdaQuery()
                         .eq(User::getUsername, account));
@@ -131,7 +132,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Result<String> updatePassword(PasswordDTO passwordDTO) {
         String oldPassword = passwordDTO.getOldPassword();
         String newPassword = passwordDTO.getNewPassword();
-        String account = BaseContext.getCurrentAccount().substring(7);
+        String account = BaseContext.getCurrentAccount().substring(RoleCode.USER_ROLE_CODE.getRoleStr().length());
         User user = userMapper.selectOne(
                 Wrappers.<User>lambdaQuery()
                         .eq(User::getUsername, account));

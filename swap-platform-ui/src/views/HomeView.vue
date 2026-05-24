@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { getItemList, getCategories } from '../api'
 import type { ItemVO, CategoryVO } from '../api/types'
+import { Loading } from '@element-plus/icons-vue'
 
+const router = useRouter()
 const items = ref<ItemVO[]>([])
 const categories = ref<CategoryVO[]>([])
 const loading = ref(false)
@@ -30,7 +33,7 @@ const fetchItems = async () => {
       category: selectedCategory.value || undefined,
       keywords: keywords.value || undefined,
     })
-    items.value = res.list || res || []
+    items.value = res.records || []
   } catch (e) {
     console.error('Failed to fetch items', e)
   } finally {
@@ -45,6 +48,10 @@ const handleSearch = () => {
 const handleCategoryChange = (val: string) => {
   selectedCategory.value = val
   fetchItems()
+}
+
+const goToDetail = (id: number) => {
+  router.push(`/item/${id}`)
 }
 </script>
 
@@ -73,9 +80,9 @@ const handleCategoryChange = (val: string) => {
         >
           <el-option
             v-for="cat in categories"
-            :key="cat.category"
-            :label="cat.category"
-            :value="cat.category"
+            :key="cat.id"
+            :label="cat.categoryName"
+            :value="cat.categoryName"
           />
         </el-select>
         <el-button type="primary" @click="handleSearch">搜索</el-button>
@@ -85,13 +92,13 @@ const handleCategoryChange = (val: string) => {
     <el-row :gutter="20" style="margin-top: 20px">
       <el-col
         v-for="item in items"
-        :key="item.itemId"
+        :key="item.id"
         :xs="24"
         :sm="12"
         :md="8"
         :lg="6"
       >
-        <el-card shadow="hover" style="margin-bottom: 20px; cursor: pointer" @click="null">
+        <el-card shadow="hover" style="margin-bottom: 20px; cursor: pointer" @click="goToDetail(item.id)">
           <div class="item-card">
             <div class="item-image">
               <el-image
