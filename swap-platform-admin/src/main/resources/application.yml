@@ -1,0 +1,61 @@
+# 服务端口
+server:
+  port: 8912
+  address: 0.0.0.0
+  servlet:
+    context-path: /
+spring:
+  # 应用名称
+  application:
+    name: swap-platform
+    version: 1.0.0
+  # 数据库连接
+  datasource:
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 500MB
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*xml
+  type-aliases-package: com.lggyx.pojo.entity
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.lggyx.pojo.entity
+
+# 日志配置
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+    com:
+      lggyx:
+        controller: debug
+
+# knife4j 配置
+knife4j:
+  enable: true
+  documents:
+    - group: default
+      name: 开发文档
+      locations: classpath:markdown/*
+  setting:
+    language: zh-CN
+  production: false
+  basic:
+    enable: false
+    username: ${KNIFE4J_USER}
+    password: ${KNIFE4J_PASSWORD}
+
+# jwt
+jwt:
+  secretKey: 0HVD8Vw839g8PJDToUCFPnmWuXTK+BzAJG8CHuMgCT8=
+  ttl: 604800000
+  token-name: token
