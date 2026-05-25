@@ -9,7 +9,7 @@ public class SwapPlatformApplication {
 
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.configure()
-                .directory("..")
+                .directory(".")
                 .load();
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
         SpringApplication.run(SwapPlatformApplication.class, args);
