@@ -89,15 +89,7 @@ npm.cmd run dev
 - ⭐ 收藏功能
 - 📢 平台公告管理
 - 📊 管理员数据统计
-- 🛠️ 自动化联调测试（基于 Claude Code Skills）
 
-## 审核材料
-
-本项目为软件工程课程作业 / 技能评测提交，包含：
-
-- `swap-skills/` — 真实可用的 Agent Skills 定义
-- `trace/` — 自动化测试的真实执行轨迹
-- `scripts/` — 自动生成的测试脚本与报告
 
 ## License
 
